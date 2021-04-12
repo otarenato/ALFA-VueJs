@@ -1,11 +1,14 @@
 <template>
     <div>
         <searchfilter v-model="filtro" />
-        <div v-for="(pokemon, index) in filtroPokemon" :key="index">
-            <pokedexItem 
-                v-bind:name="pokemon.name"
-                v-bind:image="pokemon.sprites.front_default"
-            />
+        <div class="poke-wrapper">
+            <div v-for="(pokemon, index) in filtroPokemon" :key="index">
+                <pokedexItem 
+                    v-bind:name="pokemon.name"
+                    v-bind:image="pokemon.image"
+                    v-bind:itemnumber="pokemon.id"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -26,11 +29,21 @@ export default {
         }
     },
     created() {
-        for(var i=0; i<151; i++) {
-            pokedexapi.getPokemons(i, pokes => {
-                this.pokemons.push(pokes.data);
-            })
-        }
+        pokedexapi.getPokemons('151', pokes => {
+            var array = [];
+            pokes.data.results.forEach(element => {
+                pokedexapi.getImagePokemon(element.url, item => {
+                    var obj = {
+                        id: item.data.id,
+                        name: item.data.name,
+                        image: item.data.sprites.front_default
+                    }
+                    array.push(obj);
+                    array = array.sort((a, b) => { return a.id - b.id })
+                })
+            });
+            this.pokemons = array;
+        })
     },
     computed: {
         filtroPokemon() {
@@ -39,8 +52,13 @@ export default {
                 pokemon => pokemon.name.toLowerCase().includes(lowerCaseFilter)
             )
         }
-        
     }
 }
 </script>
+
+<style lang="sass">
+    .poke-wrapper
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+</style>
 

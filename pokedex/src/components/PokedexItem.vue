@@ -1,20 +1,27 @@
 <template>
-    <div class="pokemonCard">
-        <img :src="image" />
-        <p>{{ name }}</p>
+    <div class="item-container">
+        <div class="pokemonCard">
+            <img :src="image" />
+            <p>{{ name }}</p>
+            <p>#{{ itemnumber }}</p>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: 'pokedexitem',
-    props: ['name', 'image']
+    props: ['image', 'name', 'itemnumber']
 }
 </script>
 
 <style lang="scss">
-    $border-color: #ff0;
-    .pokemonCard {
-        border: solid 1px $border-color;
+    @import '../assets/styleBase.scss';
+    .item-container {
+        padding: 5px;
+        & .pokemonCard {
+            background-color: $bg-item-color;
+        }
     }
+    
 </style>
