@@ -1,6 +1,6 @@
 <template>
     <div class="container-filter">
-        <input type="text" placeholder="Filtrar Pokemon" v-model="filtro" />
+        <input type="text" placeholder="Search" v-model="filtro" />
     </div>
 </template>
 
@@ -35,6 +35,7 @@ export default {
             border: none;
             border-bottom: solid 2px #ccc;
             background-color: $bg-color;
+            height: $height-base * 3;
         }
         & input:focus {
             outline: none;

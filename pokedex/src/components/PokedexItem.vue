@@ -1,9 +1,13 @@
 <template>
     <div class="item-container">
         <div class="pokemonCard">
-            <img :src="image" />
-            <p>{{ name }}</p>
-            <p>#{{ itemnumber }}</p>
+            <div>
+                <img :src="image" />
+            </div>
+            <div class="content-name">
+                <div><p>{{ name }}</p></div>
+                <div><p>#{{ itemnumber }}</p></div>
+            </div>
         </div>
     </div>
 </template>
@@ -20,7 +24,16 @@ export default {
     .item-container {
         padding: 5px;
         & .pokemonCard {
+            padding: 15px;
             background-color: $bg-item-color;
+            & .content-name {
+                display:flex;
+                justify-content: space-between;
+                & div > p {
+                    margin: 0;
+                    font-size: 90%;
+                }
+            }
         }
     }
     
